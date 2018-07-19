@@ -1,4 +1,4 @@
-
 (fp_lib_table
-  (lib (name "bzkhs_sheered_shenzen")(type KiCad)(uri "$(KIPRJMOD)/bzkhs_sheered_shenzen.pretty")(options "")(descr ""))
+  (lib (name bzkhs_sheered_shenzen)(type KiCad)(uri "$(KIPRJMOD)/bzkhs_sheered_shenzen.pretty")(options "")(descr ""))
+  (lib (name BZKHS)(type KiCad)(uri "$(KIPRJMOD)/BZKHS.pretty")(options "")(descr ""))
 )

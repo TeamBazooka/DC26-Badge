@@ -1,7 +1,7 @@
 (export (version D)
   (design
-    (source /Users/usr1/KiCad/BZKHS/bzkhs_sheered_shenzen.sch)
-    (date "Wednesday, July 11, 2018 'PMt' 08:37:35 PM")
+    (source /Users/usr1/Projects/DC26-Badge/hardware/bzkhs_sheered_shenzen.sch)
+    (date "Wednesday, July 18, 2018 'PMt' 07:22:45 PM")
     (tool "Eeschema 4.0.7")
     (sheet (number 1) (name /) (tstamps /)
       (title_block
@@ -38,7 +38,7 @@
       (tstamp 5B41920D))
     (comp (ref D1)
       (value LED)
-      (footprint bzkhs_sheered_shenzen:LED)
+      (footprint BZKHS:LED)
       (datasheet https://dammedia.osram.info/media/resource/hires/osram-dam-2494571/LA%20T776.pdf)
       (fields
         (field (name DK-PN) 475-1145-1-ND))
@@ -53,7 +53,7 @@
       (tstamp 5B41A6E0))
     (comp (ref BT1)
       (value Battery_Cell)
-      (footprint bzkhs_sheered_shenzen:aaa)
+      (footprint BZKHS:aaa)
       (datasheet http://www.memoryprotectiondevices.com/datasheets/BC3AAAPC-datasheet.pdf)
       (fields
         (field (name DK-PN) BC3AAAPC-ND))
@@ -146,7 +146,7 @@
       (tstamp 5B467349))
     (comp (ref D2)
       (value LED)
-      (footprint bzkhs_sheered_shenzen:LED)
+      (footprint BZKHS:LED)
       (datasheet https://dammedia.osram.info/media/resource/hires/osram-dam-2494571/LA%20T776.pdf)
       (fields
         (field (name DK-PN) 475-1145-1-ND))
@@ -155,7 +155,7 @@
       (tstamp 5B468024))
     (comp (ref D4)
       (value LED)
-      (footprint bzkhs_sheered_shenzen:LED)
+      (footprint BZKHS:LED)
       (datasheet https://dammedia.osram.info/media/resource/hires/osram-dam-2494571/LA%20T776.pdf)
       (fields
         (field (name DK-PN) 475-1145-1-ND))
@@ -164,7 +164,7 @@
       (tstamp 5B468090))
     (comp (ref D3)
       (value LED)
-      (footprint bzkhs_sheered_shenzen:LED)
+      (footprint BZKHS:LED)
       (datasheet https://dammedia.osram.info/media/resource/hires/osram-dam-2494571/LA%20T776.pdf)
       (fields
         (field (name DK-PN) 475-1145-1-ND))
@@ -173,7 +173,7 @@
       (tstamp 5B4680FD))
     (comp (ref D5)
       (value LED)
-      (footprint bzkhs_sheered_shenzen:LED)
+      (footprint BZKHS:LED)
       (datasheet https://dammedia.osram.info/media/resource/hires/osram-dam-2494571/LA%20T776.pdf)
       (fields
         (field (name DK-PN) 475-1145-1-ND))
@@ -182,7 +182,7 @@
       (tstamp 5B46816B))
     (comp (ref D6)
       (value LED)
-      (footprint bzkhs_sheered_shenzen:LED)
+      (footprint BZKHS:LED)
       (datasheet https://dammedia.osram.info/media/resource/hires/osram-dam-2494571/LA%20T776.pdf)
       (fields
         (field (name DK-PN) 475-1145-1-ND))
@@ -191,7 +191,7 @@
       (tstamp 5B4681DB))
     (comp (ref D7)
       (value LED)
-      (footprint bzkhs_sheered_shenzen:LED)
+      (footprint BZKHS:LED)
       (datasheet https://dammedia.osram.info/media/resource/hires/osram-dam-2494571/LA%20T776.pdf)
       (fields
         (field (name DK-PN) 475-1145-1-ND))
@@ -200,7 +200,7 @@
       (tstamp 5B468250))
     (comp (ref D8)
       (value LED)
-      (footprint bzkhs_sheered_shenzen:LED)
+      (footprint BZKHS:LED)
       (datasheet https://dammedia.osram.info/media/resource/hires/osram-dam-2494571/LA%20T776.pdf)
       (fields
         (field (name DK-PN) 475-1145-1-ND))
@@ -209,7 +209,7 @@
       (tstamp 5B46839A))
     (comp (ref D9)
       (value LED)
-      (footprint bzkhs_sheered_shenzen:LED)
+      (footprint BZKHS:LED)
       (datasheet https://dammedia.osram.info/media/resource/hires/osram-dam-2494571/LA%20T776.pdf)
       (fields
         (field (name DK-PN) 475-1145-1-ND))
@@ -218,7 +218,7 @@
       (tstamp 5B468417))
     (comp (ref D10)
       (value LED)
-      (footprint bzkhs_sheered_shenzen:LED)
+      (footprint BZKHS:LED)
       (datasheet https://dammedia.osram.info/media/resource/hires/osram-dam-2494571/LA%20T776.pdf)
       (fields
         (field (name DK-PN) 475-1145-1-ND))
@@ -320,7 +320,7 @@
       (tstamp 5B469FC8))
     (comp (ref SW1)
       (value DPDT)
-      (footprint bzkhs_sheered_shenzen:JS202011JAQN)
+      (footprint BZKHS:JS202011JAQN)
       (datasheet https://www.ckswitches.com/media/1422/js.pdf)
       (fields
         (field (name DK-PN) CKN10722CT-ND)
@@ -487,12 +487,12 @@
         (pin (num 19) (name PA13) (type input))
         (pin (num 20) (name PA14) (type input)))))
   (libraries
-    (library (logical device)
-      (uri "/Library/Application Support/kicad/library/device.lib"))
     (library (logical bzkhs_sheered_shenzen-cache)
-      (uri /Users/usr1/KiCad/BZKHS/bzkhs_sheered_shenzen-cache.lib))
+      (uri /Users/usr1/Projects/DC26-Badge/hardware/bzkhs_sheered_shenzen-cache.lib))
     (library (logical conn)
-      (uri "/Library/Application Support/kicad/library/conn.lib")))
+      (uri "/Library/Application Support/kicad/library/conn.lib"))
+    (library (logical device)
+      (uri "/Library/Application Support/kicad/library/device.lib")))
   (nets
     (net (code 1) (name +3V3)
       (node (ref U1) (pin 16))
