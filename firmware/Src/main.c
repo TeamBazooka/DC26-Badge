@@ -62,6 +62,15 @@ static void MX_GPIO_Init(void);
 
 /* USER CODE BEGIN 0 */
 
+/**
+  * @brief  The application loop call.
+  *
+  * @retval None
+  */
+void loop(void) {
+
+}
+
 /* USER CODE END 0 */
 
 /**
@@ -101,7 +110,7 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   while (1)
   {
-
+    loop();
   /* USER CODE END WHILE */
 
   /* USER CODE BEGIN 3 */
