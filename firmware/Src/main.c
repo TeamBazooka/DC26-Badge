@@ -55,12 +55,180 @@
 void SystemClock_Config(void);
 static void MX_GPIO_Init(void);
 
+uint8_t rand(void);
+void sequence(void);
+void sequence_reverse(void);
+void sequence_flash_after(void);
+void sequence_reverse_flash_after(void);
+void flash_all(void);
+void flash_hold_sequence(void);
+void flash_sequence(void);
+void flash_sequence_times(uint8_t times);
+void flash_times(uint8_t times);
+void flash(GPIO_TypeDef* GPIOx, uint16_t pin);
+void off(void);
+
 /* USER CODE BEGIN PFP */
 /* Private function prototypes -----------------------------------------------*/
 
 /* USER CODE END PFP */
 
 /* USER CODE BEGIN 0 */
+#define MAX_RAND 500
+uint8_t random_values[MAX_RAND] = {
+  7, 3, 4, 6, 9, 2, 2, 9, 1, 9, 7, 5, 9, 2, 9, 2, 7, 8, 0, 4,
+  5, 5, 0, 3, 6, 8, 0, 10, 0, 9, 0, 8, 6, 6, 8, 2, 10, 4, 6, 10,
+  1, 6, 0, 5, 10, 2, 4, 2, 0, 2, 0, 10, 10, 3, 10, 9, 3, 4, 9, 6,
+  0, 7, 0, 5, 8, 3, 3, 6, 8, 0, 6, 6, 3, 4, 4, 9, 1, 3, 7, 10,
+  9, 4, 8, 9, 4, 4, 8, 10, 3, 9, 3, 9, 2, 5, 2, 3, 8, 4, 8, 10,
+  10, 10, 2, 4, 10, 7, 8, 3, 5, 1, 1, 10, 2, 8, 8, 4, 4, 0, 2, 3,
+  3, 10, 0, 2, 0, 9, 10, 0, 5, 6, 2, 10, 0, 9, 9, 0, 5, 9, 4, 1,
+  4, 4, 8, 9, 7, 8, 0, 2, 10, 2, 1, 1, 4, 9, 9, 6, 6, 7, 1, 8,
+  2, 3, 9, 0, 1, 6, 8, 7, 3, 1, 8, 7, 0, 3, 3, 3, 2, 3, 10, 5,
+  6, 1, 8, 9, 1, 7, 6, 3, 5, 1, 0, 9, 9, 1, 5, 6, 1, 2, 4, 4,
+  9, 0, 6, 2, 0, 7, 4, 7, 7, 2, 3, 7, 0, 9, 7, 5, 0, 6, 6, 5,
+  10, 0, 3, 8, 5, 6, 4, 1, 7, 2, 4, 0, 6, 4, 10, 1, 0, 0, 7, 1,
+  0, 6, 4, 3, 5, 2, 7, 1, 8, 8, 9, 6, 1, 5, 4, 5, 6, 10, 3, 5,
+  3, 10, 5, 10, 6, 10, 0, 7, 5, 10, 7, 5, 3, 3, 6, 0, 10, 0, 4, 7,
+  2, 6, 0, 1, 5, 3, 4, 2, 4, 9, 0, 7, 9, 5, 9, 8, 8, 0, 5, 8,
+  1, 10, 6, 0, 1, 1, 5, 9, 1, 7, 5, 7, 2, 1, 9, 7, 9, 1, 6, 5,
+  9, 3, 4, 0, 3, 8, 4, 0, 10, 6, 3, 3, 6, 4, 8, 2, 9, 8, 3, 3,
+  10, 4, 2, 3, 8, 5, 5, 4, 0, 5, 8, 8, 3, 10, 9, 8, 5, 2, 1, 10,
+  10, 2, 4, 6, 2, 7, 9, 6, 9, 10, 4, 3, 8, 7, 8, 1, 9, 8, 6, 3,
+  7, 1, 5, 9, 0, 6, 8, 1, 8, 1, 3, 3, 0, 0, 7, 1, 1, 7, 5, 6,
+  7, 3, 5, 0, 7, 1, 7, 6, 10, 6, 3, 5, 4, 9, 9, 7, 5, 6, 4, 6,
+  7, 3, 2, 2, 0, 3, 8, 9, 7, 2, 5, 8, 4, 10, 3, 7, 6, 0, 5, 3,
+  1, 7, 10, 10, 1, 10, 3, 3, 5, 8, 0, 6, 5, 9, 5, 1, 2, 1, 9, 1,
+  1, 8, 6, 3, 7, 0, 8, 10, 7, 8, 7, 4, 0, 8, 3, 7, 8, 3, 10, 6,
+  9, 6, 10, 8, 3, 4, 4, 7, 0, 10, 0, 0, 4, 7, 6, 7, 8, 9, 9, 8
+};
+uint current_value = 0;
+
+uint8_t rand(void) {
+  if(current_value >= MAX_RAND) {
+    current_value = 0;
+  }
+  return random_values[current_value++];
+}
+
+void sequence(void) {
+  HAL_GPIO_WritePin(GPIOA, LED_B_Pin, GPIO_PIN_SET);
+  HAL_Delay(250);
+  HAL_GPIO_WritePin(GPIOA, LED_Z_Pin, GPIO_PIN_SET);
+  HAL_Delay(250);
+  HAL_GPIO_WritePin(GPIOA, LED_K_Pin, GPIO_PIN_SET);
+  HAL_Delay(250);
+  HAL_GPIO_WritePin(GPIOA, LED_H_Pin, GPIO_PIN_SET);
+  HAL_Delay(250);
+  HAL_GPIO_WritePin(GPIOA, LED_S_Pin, GPIO_PIN_SET);
+  HAL_Delay(250);
+  HAL_GPIO_WritePin(GPIOA, SW_SAO_Pin, GPIO_PIN_SET);
+  HAL_Delay(250);
+  off();
+}
+
+void sequence_reverse(void) {
+  HAL_GPIO_WritePin(GPIOA, LED_S_Pin, GPIO_PIN_SET);
+  HAL_Delay(250);
+  HAL_GPIO_WritePin(GPIOA, LED_H_Pin, GPIO_PIN_SET);
+  HAL_Delay(250);
+  HAL_GPIO_WritePin(GPIOA, LED_K_Pin, GPIO_PIN_SET);
+  HAL_Delay(250);
+  HAL_GPIO_WritePin(GPIOA, LED_Z_Pin, GPIO_PIN_SET);
+  HAL_Delay(250);
+  HAL_GPIO_WritePin(GPIOA, LED_B_Pin, GPIO_PIN_SET);
+  HAL_Delay(250);
+  HAL_GPIO_WritePin(GPIOA, SW_SAO_Pin, GPIO_PIN_SET);
+  HAL_Delay(250);
+  off();
+}
+
+void sequence_flash_after(void) {
+  sequence();
+  HAL_Delay(250);
+  flash(
+    GPIOA,
+    LED_B_Pin|LED_Z_Pin|LED_K_Pin|LED_H_Pin|LED_S_Pin|SW_SAO_Pin
+  );
+  HAL_Delay(250);
+  flash(
+    GPIOA,
+    LED_B_Pin|LED_Z_Pin|LED_K_Pin|LED_H_Pin|LED_S_Pin|SW_SAO_Pin
+  );
+}
+
+void sequence_reverse_flash_after(void) {
+  sequence_reverse();
+  HAL_Delay(250);
+  flash(
+    GPIOA,
+    LED_B_Pin|LED_Z_Pin|LED_K_Pin|LED_H_Pin|LED_S_Pin|SW_SAO_Pin
+  );
+  HAL_Delay(250);
+  flash(
+    GPIOA,
+    LED_B_Pin|LED_Z_Pin|LED_K_Pin|LED_H_Pin|LED_S_Pin|SW_SAO_Pin
+  );
+}
+
+void flash_all(void) {
+  flash_times(3);
+}
+
+void flash_hold_sequence(void) {
+  flash(GPIOA, LED_B_Pin);
+  HAL_Delay(250);
+  flash(GPIOA, LED_Z_Pin);
+  HAL_Delay(250);
+  flash(GPIOA, LED_K_Pin);
+  HAL_Delay(250);
+  flash(GPIOA, LED_H_Pin);
+  HAL_Delay(250);
+  flash(GPIOA, LED_S_Pin);
+  HAL_Delay(250);
+  flash(GPIOA, SW_SAO_Pin);
+  HAL_Delay(250);
+  off();
+}
+
+void flash_sequence(void) {
+  flash(GPIOA, LED_B_Pin);
+  flash(GPIOA, LED_Z_Pin);
+  flash(GPIOA, LED_K_Pin);
+  flash(GPIOA, LED_H_Pin);
+  flash(GPIOA, LED_S_Pin);
+  flash(GPIOA, SW_SAO_Pin);
+}
+
+void flash_sequence_times(uint8_t times) {
+  for(uint8_t ii=times;ii>=0;ii--) {
+    flash_sequence();
+  }
+}
+
+void flash_times(uint8_t times) {
+  for(uint8_t ii=times;ii>=0;ii--) {
+    flash(
+      GPIOA,
+      LED_B_Pin|LED_Z_Pin|LED_K_Pin|LED_H_Pin|LED_S_Pin|SW_SAO_Pin
+    );
+    HAL_Delay(100);
+  }
+}
+
+void flash(GPIO_TypeDef* GPIOx, uint16_t pin) {
+  HAL_GPIO_WritePin(GPIOx, pin, GPIO_PIN_SET);
+  HAL_Delay(250);
+  HAL_GPIO_WritePin(GPIOx, pin, GPIO_PIN_RESET);
+}
+
+void off(void) {
+  HAL_GPIO_WritePin(
+    GPIOA,
+    LED_B_Pin|LED_Z_Pin|LED_K_Pin|LED_H_Pin|LED_S_Pin|SW_SAO_Pin,
+    GPIO_PIN_SET
+  );
+}
 
 /**
   * @brief  The application loop call.
@@ -68,12 +236,40 @@ static void MX_GPIO_Init(void);
   * @retval None
   */
 void loop(void) {
-  HAL_GPIO_WritePin(GPIOA, LED_B_Pin|LED_Z_Pin|LED_K_Pin|LED_H_Pin
-                          |LED_S_Pin|SW_SAO_Pin, GPIO_PIN_SET);
-  HAL_Delay(500);
-  HAL_GPIO_WritePin(GPIOA, LED_B_Pin|LED_Z_Pin|LED_K_Pin|LED_H_Pin
-                          |LED_S_Pin|SW_SAO_Pin, GPIO_PIN_RESET);
-  HAL_Delay(500);
+  int random_value = rand();
+  switch(random_value) {
+    case 0:
+      flash_all();
+      break;
+    case 1:
+      sequence();
+      break;
+    case 2:
+      sequence_reverse();
+      break;
+    case 3:
+      sequence_flash_after();
+      break;
+    case 4:
+      sequence_reverse_flash_after();
+      break;
+    case 5:
+      flash_hold_sequence();
+      break;
+    case 6:
+      flash_sequence();
+      break;
+    case 7:
+    case 8:
+    case 9:
+    case 10:
+      flash_sequence_times(5);
+      flash_times(10);
+      flash_sequence_times(10);
+      break;
+  }
+  off();
+  HAL_Delay(1000 * 60 * rand());
 }
 
 /* USER CODE END 0 */
