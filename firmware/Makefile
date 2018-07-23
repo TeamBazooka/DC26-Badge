@@ -30,6 +30,20 @@ OPT = -O3
 #######################################
 # Build path
 BUILD_DIR = build
+# Toolchain path
+BASE_URL = https://bintray.com/platformio/dl-packages/download_file?file_path=
+UNAME_S := $(shell uname -s)
+ifeq ($(UNAME_S),Linux)
+TOOLCHAIN_URL = $(BASE_URL)toolchain-gccarmnoneeabi-linux_x86_64-1.70201.0.tar.gz
+UPLOAD_URL = $(BASE_URL)tool-stlink-linux_x86_64-1.10400.0.tar.gz
+endif
+ifeq ($(UNAME_S),Darwin)
+TOOLCHAIN_URL = $(BASE_URL)toolchain-gccarmnoneeabi-darwin_x86_64-1.70201.0.tar.gz
+UPLOAD_URL = $(BASE_URL)tool-stlink-darwin_x86_64-1.10400.0.tar.gz
+endif
+TOOLCHAIN_PATH = .toolchain
+GCC_PATH = $(TOOLCHAIN_PATH)/bin
+UPLOAD_PATH = $(TOOLCHAIN_PATH)/upload
 
 ######################################
 # source
@@ -80,6 +94,7 @@ SZ = $(PREFIX)size
 endif
 HEX = $(CP) -O ihex
 BIN = $(CP) -O binary -S
+ST_FLASH = $(UPLOAD_PATH)/bin/st-flash
 
 #######################################
 # CFLAGS
@@ -173,8 +188,21 @@ $(BUILD_DIR)/%.hex: $(BUILD_DIR)/%.elf | $(BUILD_DIR)
 $(BUILD_DIR)/%.bin: $(BUILD_DIR)/%.elf | $(BUILD_DIR)
 	$(BIN) $< $@
 
-$(BUILD_DIR):
-	mkdir $@
+$(BUILD_DIR): $(TOOLCHAIN_PATH)
+	mkdir -p $@
+
+$(TOOLCHAIN_PATH):
+	mkdir -p $@
+	wget $(TOOLCHAIN_URL) -O $(TOOLCHAIN_PATH)/toolchain.tar.gz
+	tar -xf $(TOOLCHAIN_PATH)/toolchain.tar.gz -C $(TOOLCHAIN_PATH)
+
+$(UPLOAD_PATH):
+	mkdir -p $@
+	wget $(UPLOAD_URL) -O $(UPLOAD_PATH)/upload.tar.gz
+	tar -xf $(UPLOAD_PATH)/upload.tar.gz -C $(UPLOAD_PATH)
+
+upload: $(BUILD_DIR)/$(TARGET).bin $(UPLOAD_PATH)
+	$(ST_FLASH) write $(BUILD_DIR)/$(TARGET).bin 0x08000000
 
 #######################################
 # clean up
