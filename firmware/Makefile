@@ -31,18 +31,20 @@ OPT = -O3
 # Build path
 BUILD_DIR = build
 # Toolchain path
+TOOLCHAIN_RELEASE=gcc-arm-none-eabi-7-2018-q2-update
+ARM_BASE_URL=https://developer.arm.com/-/media/Files/downloads/gnu-rm/7-2018q2
 BASE_URL = https://bintray.com/platformio/dl-packages/download_file?file_path=
-UNAME_S := $(shell uname -s)
-ifeq ($(UNAME_S),Linux)
-TOOLCHAIN_URL = $(BASE_URL)toolchain-gccarmnoneeabi-linux_x86_64-1.70201.0.tar.gz
+OS = $(shell uname -s)
+ifeq ($(OS),Linux)
+TOOLCHAIN_URL = $(ARM_BASE_URL)/$(TOOLCHAIN_RELEASE)-linux.tar.bz2
 UPLOAD_URL = $(BASE_URL)tool-stlink-linux_x86_64-1.10400.0.tar.gz
 endif
-ifeq ($(UNAME_S),Darwin)
-TOOLCHAIN_URL = $(BASE_URL)toolchain-gccarmnoneeabi-darwin_x86_64-1.70201.0.tar.gz
+ifeq ($(OS),Darwin)
+TOOLCHAIN_URL = $(ARM_BASE_URL)/$(TOOLCHAIN_RELEASE)-mac.tar.bz2
 UPLOAD_URL = $(BASE_URL)tool-stlink-darwin_x86_64-1.10400.0.tar.gz
 endif
 TOOLCHAIN_PATH = .toolchain
-GCC_PATH = $(TOOLCHAIN_PATH)/bin
+GCC_PATH = $(TOOLCHAIN_PATH)/$(TOOLCHAIN_RELEASE)/bin
 UPLOAD_PATH = $(TOOLCHAIN_PATH)/upload
 
 ######################################
@@ -193,8 +195,8 @@ $(BUILD_DIR): $(TOOLCHAIN_PATH)
 
 $(TOOLCHAIN_PATH):
 	mkdir -p $@
-	wget $(TOOLCHAIN_URL) -O $(TOOLCHAIN_PATH)/toolchain.tar.gz
-	tar -xf $(TOOLCHAIN_PATH)/toolchain.tar.gz -C $(TOOLCHAIN_PATH)
+	wget $(TOOLCHAIN_URL) -O $(TOOLCHAIN_PATH)/toolchain.tar.bz2
+	tar -xf $(TOOLCHAIN_PATH)/toolchain.tar.bz2 -C $(TOOLCHAIN_PATH)
 
 $(UPLOAD_PATH):
 	mkdir -p $@
