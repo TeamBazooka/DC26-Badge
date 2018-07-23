@@ -68,7 +68,12 @@ static void MX_GPIO_Init(void);
   * @retval None
   */
 void loop(void) {
-
+  HAL_GPIO_WritePin(GPIOA, LED_B_Pin|LED_Z_Pin|LED_K_Pin|LED_H_Pin
+                          |LED_S_Pin|SW_SAO_Pin, GPIO_PIN_SET);
+  HAL_Delay(500);
+  HAL_GPIO_WritePin(GPIOA, LED_B_Pin|LED_Z_Pin|LED_K_Pin|LED_H_Pin
+                          |LED_S_Pin|SW_SAO_Pin, GPIO_PIN_RESET);
+  HAL_Delay(500);
 }
 
 /* USER CODE END 0 */
